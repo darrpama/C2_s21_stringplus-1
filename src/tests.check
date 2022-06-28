@@ -1,0 +1,1261 @@
+#include <stdio.h>
+#include <check.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stddef.h>
+#include <limits.h>
+#include "s21_string.h"
+
+#tcase memcmp
+
+#test memcmp1
+char array_1[] = "abcd";
+char array_2[] = "abcd";
+size_t n = 4;
+int number_a = s21_memcmp(array_2, array_1, n);
+int number_b = memcmp(array_2, array_1, n);
+ck_assert_int_eq(number_a, number_b);
+
+#test memcmp2
+char array_1[] = "abcdf";
+char array_2[] = "abcde";
+size_t n = 5;
+int number_a = s21_memcmp(array_2, array_1, n);
+int number_b = memcmp(array_2, array_1, n);
+ck_assert_int_eq(number_a, number_b);
+
+#test memcmp3
+char array_1[] = "abcdf";
+char array_2[] = "abcde";
+size_t n = 4;
+int number_a = s21_memcmp(array_2, array_1, n);
+int number_b = memcmp(array_2, array_1, n);
+ck_assert_int_eq(number_a, number_b);
+
+#test memcmp4
+char array_1[] = "";
+char array_2[] = "";
+size_t n = 1;
+int number_a = s21_memcmp(array_2, array_1, n);
+int number_b = memcmp(array_2, array_1, n);
+ck_assert_int_eq(number_a, number_b);
+
+#test memcmp5
+char array_1[] = "";
+char array_2[] = "hello";
+size_t n = 1;
+int number_a = s21_memcmp(array_2, array_1, n);
+int number_b = memcmp(array_2, array_1, n);
+ck_assert_int_eq(number_a, number_b);
+
+#tcase memmove
+
+#test memmove1
+char array_1[] = "hello";
+char array_2[] = "world";
+char array_3[] = "hello";
+char array_4[] = "world";
+s21_memmove(array_1, array_2, 5);
+memmove(array_3, array_4, 5);
+ck_assert_str_eq(array_1, array_3);
+
+#test memmove2
+char array_1[] = "hello";
+char array_2[] = "M";
+char array_3[] = "hello";
+char array_4[] = "M";
+s21_memmove(array_1, array_2, 2);
+memmove(array_3, array_4, 2);
+ck_assert_str_eq(array_1, array_3);
+
+#test memmove3
+char array_1[] = "hello";
+char array_2[] = "darkness my old friend";
+char array_3[] = "hello";
+char array_4[] = "darkness my old friend";
+s21_memmove(array_1, array_2, 4);
+memmove(array_3, array_4, 4);
+ck_assert_str_eq(array_1, array_3);
+
+#test memmove4
+char array_1[] = "hello";
+char array_2[5] = "dark";
+char array_3[] = "hello";
+char array_4[5] = "dark";
+s21_memmove(array_1, array_2, 5);
+memmove(array_3, array_4, 5);
+ck_assert_str_eq(array_1, array_3);
+
+#test memmove5
+char array_1[20] = "";
+char array_2[30] = "darkness my old friend";
+char array_3[20] = "";
+char array_4[30] = "darkness my old friend";
+s21_memmove(array_1, array_2, 4);
+memmove(array_3, array_4, 4);
+ck_assert_str_eq(array_1, array_3);
+
+#tcase memset
+
+#test memset1
+char array_1[] = "hello";
+char symbol1 = 'H';
+char array_2[] = "hello";
+s21_memset(array_1, symbol1, 1);
+memset(array_2, symbol1, 1);
+ck_assert_str_eq(array_1, array_2);
+
+#test memset2
+char array_1[] = "GL Daxao!";
+char array_2[] = "Gl Daxao!";
+char symbol1 = 'G';
+s21_memset(array_1, symbol1, 2);
+memset(array_2, symbol1, 2);
+ck_assert_str_eq(array_1, array_2);
+
+#test memset3
+char array_1[10] = "Earth";
+char array_2[10] = "Earth";
+char symbol1 = 'G';
+s21_memset(array_1, symbol1, 5);
+memset(array_2, symbol1, 5);
+ck_assert_str_eq(array_1, array_2);
+
+#test memset4
+char array_1[10] = "Earth";
+char array_2[10] = "Earth";
+char symbol1 = 'G';
+s21_memset(array_1, symbol1, 6);
+memset(array_2, symbol1, 6);
+ck_assert_str_eq(array_1, array_2);
+
+#test memset5
+char array_1[10] = "";
+char array_2[10] = "";
+char symbol1 = 'G';
+s21_memset(array_1, symbol1, 6);
+memset(array_2, symbol1, 6);
+ck_assert_str_eq(array_1, array_2);
+
+
+#tcase strcat 
+
+#test strcat1
+char array_1[20] = "Bury";
+char array_2[20] = "Bury";
+char array_3[20] = "the light";
+char array_4[20] = "the light";
+s21_strcat(array_1, array_3);
+strcat(array_2, array_4);
+ck_assert_str_eq(array_1, array_2);
+
+#test strcat2
+char array_1[20] = "Bury";
+char array_2[20] = "Bury";
+char array_3[20] = "";
+char array_4[20] = "";
+s21_strcat(array_1, array_3);
+strcat(array_2, array_4);
+ck_assert_str_eq(array_1, array_2);
+
+#test strcat3
+char array_1[20] = "";
+char array_2[20] = "";
+char array_3[20] = "the light";
+char array_4[20] = "the light";
+s21_strcat(array_1, array_3);
+strcat(array_2, array_4);
+ck_assert_str_eq(array_1, array_2);
+
+#test strcat4
+char array_1[20] = "";
+char array_2[20] = "";
+char array_3[20] = "";
+char array_4[20] = "";
+s21_strcat(array_1, array_3);
+strcat(array_2, array_4);
+ck_assert_str_eq(array_1, array_2);
+
+#test strcat5
+char array_1[30] = "Bury the \0 light";
+char array_2[30] = "Bury the \0 light";
+char array_3[30] = "darkness";
+char array_4[30] = "darkness";
+s21_strcat(array_1, array_3);
+strcat(array_2, array_4);
+ck_assert_str_eq(array_1, array_2);
+
+#tcase strncat
+
+#test strncat1
+char array_1[20] = "Sun";
+char array_2[20] = "Sun";
+char array_3[20] = "shine";
+char array_4[20] = "shine";
+s21_strncat(array_1, array_3, 6);
+strncat(array_2, array_4, 6);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncat2
+char array_1[20] = "Sun";
+char array_2[20] = "Sun";
+char array_3[20] = "shine";
+char array_4[20] = "shine";
+s21_strncat(array_1, array_3, 6);
+strncat(array_2, array_4, 6);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncat3
+char array_1[20] = "Sun";
+char array_2[20] = "Sun";
+char array_3[5] = "beam";
+char array_4[5] = "beam";
+s21_strncat(array_1, array_3, 5);
+strncat(array_2, array_4, 5);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncat4
+char array_1[20] = "Sun";
+char array_2[20] = "Sun";
+char array_3[] = "";
+char array_4[] = "";
+s21_strncat(array_1, array_3, 0);
+strncat(array_2, array_4, 0);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncat5
+char array_1[20] = "";
+char array_2[20] = "";
+char array_3[20] = "void";
+char array_4[20] = "void";
+s21_strncat(array_1, array_3, 0);
+strncat(array_2, array_4, 0);
+ck_assert_str_eq(array_1, array_2);
+
+#tcase strchr
+
+#test strchr1
+char array_1[20] = "abcdef";
+char symbol = 'b';
+char* ptrs21 = s21_strchr(array_1, symbol);
+char* ptr = strchr(array_1, symbol);
+ck_assert_ptr_eq(ptrs21, ptr);
+
+#test strchr2
+char array_1[20] = "abcdef";
+char symbol = 'r';
+//char* ptrs21 = s21_strchr(array_1, symbol);
+char* ptr = strchr(array_1, symbol);
+ck_assert_ptr_eq(NULL, ptr);
+
+#test strchr3
+char array_1[20] = "abcdbef";
+char symbol = 'b';
+char* ptrs21 = s21_strchr(array_1, symbol);
+char* ptr = strchr(array_1, symbol);
+ck_assert_str_eq(ptrs21, ptr);
+
+#test strchr4
+char array_1[20] = "a\0cdbef";
+char symbol = 'b';
+char* ptrs21 = s21_strchr(array_1, symbol);
+char* ptr = strchr(array_1, symbol);
+ck_assert_ptr_eq(ptrs21, ptr);
+
+#test strchr5
+char array_1[20] = "";
+char symbol = 'b';
+char* ptrs21 = s21_strchr(array_1, symbol);
+char* ptr = strchr(array_1, symbol);
+ck_assert_ptr_eq(ptrs21, ptr);
+
+#tcase strcmp
+
+#test strcmp1
+char array_1[20] = "Biven";
+char array_2[20] = "Biven";
+int res1 = strcmp(array_1, array_2);
+int res21 = s21_strcmp(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcmp2
+char array_1[20] = "Biven";
+char array_2[20] = "BiveN";
+int res1 = strcmp(array_1, array_2);
+int res21 = s21_strcmp(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcmp3
+char array_1[20] = "Biv\0en";
+char array_2[20] = "Biv\0eN";
+int res1 = strcmp(array_1, array_2);
+int res21 = s21_strcmp(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcmp4
+char array_1[20] = "";
+char array_2[20] = "";
+int res1 = strcmp(array_1, array_2);
+int res21 = s21_strcmp(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcmp5
+char array_2[20] = "";
+char array_1[20] = "Biven";
+int res1 = strcmp(array_1, array_2);
+int res21 = s21_strcmp(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#tcase strncmp
+
+#test strncmp1
+char array_1[20] = "Sunset switch";
+char array_2[20] = "Sunset glitch";
+int res1 = strncmp(array_1, array_2, 6);
+int res21 = s21_strncmp(array_1, array_2, 6);
+ck_assert_int_eq(res1, res21);
+
+#test strncmp2
+char array_1[20] = "Sunset switch";
+char array_2[20] = "Sunset glitch";
+int res1 = strncmp(array_1, array_2, 9);
+int res21 = s21_strncmp(array_1, array_2, 9);
+ck_assert_int_eq(res1, res21);
+
+#test strncmp3
+char array_1[20] = "Sunset switch";
+char array_2[20] = "Sunset glitch";
+int res1 = strncmp(array_1, array_2, sizeof(array_1));
+int res21 = s21_strncmp(array_1, array_2, sizeof(array_1));
+ck_assert_int_eq(res1, res21);
+
+#test strncmp4
+char array_1[20] = "Sunset";
+char array_2[20] = "Sunset";
+int res1 = strncmp(array_1, array_2, sizeof(array_1));
+int res21 = s21_strncmp(array_1, array_2, sizeof(array_1));
+ck_assert_int_eq(res1, res21);
+
+#test strncmp5
+char array_1[20] = "Sunset";
+char array_2[20] = "";
+int res1 = strncmp(array_1, array_2, 6);
+int res21 = s21_strncmp(array_1, array_2, 6);
+ck_assert_int_eq(res1, res21);
+
+#tcase strcpy
+
+#test strcpy1
+char array_1[20] = "12288";
+char array_2[20] = "14";
+char array_3[20] = "12288";
+strcpy(array_1, array_2);
+s21_strcpy(array_3, array_2);
+ck_assert_str_eq(array_1, array_3);
+
+#test strcpy2
+char array_1[20] = "12288";
+char array_2[20] = "";
+char array_3[20] = "12288";
+strcpy(array_1, array_2);
+s21_strcpy(array_3, array_2);
+ck_assert_str_eq(array_1, array_3);
+
+#test strcpy3
+char array_1[20] = "";
+char array_2[20] = "14";
+char array_3[20] = "";
+strcpy(array_1, array_2);
+s21_strcpy(array_3, array_2);
+ck_assert_str_eq(array_1, array_3);
+
+#test strcpy4
+char array_1[20] = "12288";
+char array_2[20] = "14\01567";
+char array_3[20] = "12288";
+strcpy(array_1, array_2);
+s21_strcpy(array_3, array_2);
+ck_assert_str_eq(array_1, array_3);
+
+#test strcpy5
+char array_1[20] = "12288";
+char array_2[20] = "";
+char array_3[20] = "12288";
+strcpy(array_1, array_2);
+s21_strcpy(array_3, array_2);
+ck_assert_str_eq(array_1, array_3);
+
+#tcase strncpy
+
+#test strncpy1
+char array_1[20] = "str1";
+char array_2[20] = "str1";
+char buffer[20] = "p";
+strncpy(array_1, buffer, 2);
+s21_strncpy(array_2, buffer, 2);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncpy2
+char array_1[20] = "str1";
+char array_2[20] = "str1";
+char buffer[20] = "pnvght";
+strncpy(array_1, buffer, 7);
+s21_strncpy(array_2, buffer, 7);
+ck_assert_str_eq(array_1, array_2);
+
+#test strncpy3
+char array_1[20] = "Bureal";
+char array_2[20] = "Bureal";
+char buffer[20] = "Un";
+strncpy(array_1, buffer, sizeof(buffer));
+s21_strncpy(array_2, buffer, sizeof(buffer));
+ck_assert_str_eq(array_1, array_2);
+
+#test strncpy4
+char array_1[20] = "";
+char array_2[20] = "";
+char buffer[20] = "Grave";
+strncpy(array_1, buffer, sizeof(buffer));
+s21_strncpy(array_2, buffer, sizeof(buffer));
+ck_assert_str_eq(array_1, array_2);
+
+#test strncpy5
+char array_1[20] = "aboba";
+char buffer[20] = "ptr\0ptr";
+char array_3[20] = "aboba";
+strncpy(array_1, buffer, sizeof(buffer));
+s21_strncpy(array_3, buffer, sizeof(buffer));
+ck_assert_str_eq(array_1, array_3);
+
+#tcase strcspn
+
+#test strcspn1
+char array_1[20] = "Eva";
+char array_2[20] = "Value";
+int res1 = (int)strcspn(array_1, array_2);
+int res21 = (int)s21_strcspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcspn2
+char array_1[20] = "Nova";
+char array_2[20] = "Value";
+int res1 = (int)strcspn(array_1, array_2);
+int res21 = (int)s21_strcspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcspn3
+char array_1[20] = "Eva";
+char array_2[20] = "Low";
+int res1 = (int)strcspn(array_1, array_2);
+int res21 = (int)s21_strcspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcspn4
+char array_1[20] = "";
+char array_2[20] = "Value";
+int res1 = (int)strcspn(array_1, array_2);
+int res21 = (int)s21_strcspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#test strcspn5
+char array_1[20] = "Eva";
+char array_2[20] = "Valgrind";
+int res1 = (int)strcspn(array_1, array_2);
+int res21 = (int)s21_strcspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+
+#tcase strerror
+
+#test strerror1
+int i = 10;
+char* res1 = strerror(i);
+char* res21 = s21_strerror(i);
+ck_assert_str_eq(res1, res21);
+
+#test strerror2
+int i = -4;
+char* res1 = strerror(i);
+char* res21 = s21_strerror(i);
+ck_assert_str_eq(res1, res21);
+
+#test strerror3
+int i = 1000;
+char* res1 = s21_strerror(i);
+char* res21 = strerror(i);
+ck_assert_str_eq(res1, res21);
+
+#test strerror4
+int i = 5000;
+char* res1 = strerror(i);
+char* res21 = s21_strerror(i);
+ck_assert_str_eq(res1, res21);
+#tcase strlen
+
+#test strlen1
+char array[20] = "abcdef";
+int res1 = (int)strlen(array);
+int res21 = (int)s21_strlen(array);
+ck_assert_int_eq(res1, res21);
+
+#test strlen2
+char array[20] = "";
+int res1 = (int)strlen(array);
+int res21 = (int)s21_strlen(array);
+ck_assert_int_eq(res1, res21);
+
+#test strlen3
+char array[20] = "abc\0ef";
+int res1 = (int)strlen(array);
+int res21 = (int)s21_strlen(array);
+ck_assert_int_eq(res1, res21);
+
+#test strlen4
+char array[40] = "abcdefjsjdglhdgihiuglhsdhi";
+int res1 = (int)strlen(array);
+int res21 = (int)s21_strlen(array);
+ck_assert_int_eq(res1, res21);
+
+#test strlen5
+char array[20] = "\0dsaref";
+int res1 = (int)strlen(array);
+int res21 = (int)s21_strlen(array);
+ck_assert_int_eq(res1, res21);
+
+#tcase strpbrk
+
+#test strpbrk1
+char array_1[20] = "Slava Ukraine!";
+char array_2[20] = "wwwwww";
+char* res1 = strpbrk(array_1, array_2);
+char* res21 = s21_strpbrk(array_1, array_2);
+ck_assert_ptr_eq(res1, res21);
+
+#test strpbrk2
+char array_1[20] = "Slava Ukraine!";
+char array_2[20] = "UWXH";
+char* res1 = strpbrk(array_1, array_2);
+char* res21 = s21_strpbrk(array_1, array_2);
+ck_assert_str_eq(res1, res21);
+
+#test strpbrk3
+char array_1[20] = "Slava Ukraine!";
+char array_2[20] = "";
+char* res1 = strpbrk(array_1, array_2);
+char* res21 = s21_strpbrk(array_1, array_2);
+ck_assert_ptr_eq(res1, res21);
+
+#test strpbrk4
+char array_1[20] = "Slava Ukraine!";
+char array_2[20] = "!?";
+char* res1 = strpbrk(array_1, array_2);
+char* res21 = s21_strpbrk(array_1, array_2);
+ck_assert_str_eq(res1, res21);
+
+#test strpbrk5
+char array_1[20] = "Slava Ukraine!";
+char array_2[20] = " *9kf";
+char* res1 = strpbrk(array_1, array_2);
+char* res21 = s21_strpbrk(array_1, array_2);
+ck_assert_str_eq(res1, res21);
+
+#tcase strrchr
+#test strrchr1
+char array1[20] = "Universe";
+char symbol = 'i';
+char* res1 = strrchr(array1, symbol);
+char* res21 = s21_strrchr(array1, symbol);
+ck_assert_str_eq(res1, res21);
+#test strrchr2
+char array1[20] = "Universe";
+char symbol = 'e';
+char* res1 = strrchr(array1, symbol);
+char* res21 = s21_strrchr(array1, symbol);
+ck_assert_str_eq(res1, res21);
+#test strrchr3
+char array1[20] = "Univer\0se";
+char symbol = 'e';
+char* res1 = strrchr(array1, symbol);
+char* res21 = s21_strrchr(array1, symbol);
+ck_assert_str_eq(res1, res21);
+#test strrchr4
+char array_1[20] = "";
+char symbol = 'i';
+char* res1 = strrchr(array_1, symbol);
+char* res21 = s21_strrchr(array_1, symbol);
+ck_assert_ptr_eq(res1, res21);
+#tcase strspn
+#test strspn1
+char array_1[20] = "Galaxy";
+char array_2[20] = "Garage";
+int res1 = strspn(array_1, array_2);
+int res21 = s21_strspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+#test strspn2
+char array_1[20] = "Galaxy";
+char array_2[20] = "Universe";
+int res1 = strspn(array_1, array_2);
+int res21 = s21_strspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+#test strspn3
+char array_1[20] = "Galaxy";
+char array_2[20] = "Galaxy one";
+int res1 = strspn(array_1, array_2);
+int res21 = s21_strspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+#test strspn4
+char array_1[20] = "";
+char array_2[20] = "Universe";
+int res1 = strspn(array_1, array_2);
+int res21 = s21_strspn(array_1, array_2);
+ck_assert_int_eq(res1, res21);
+#tcase strstr
+#test strstr1
+char array_1[20] = "Solar Halo";
+char needle[20] = "Halo";
+char* res1 = strstr(array_1, needle);
+char* res21 = s21_strstr(array_1, needle);
+ck_assert_str_eq (res1, res21);
+#test strstr2
+char array_1[20] = "Solar Halo";
+char needle[20] = "Salo";
+char* res1 = strstr(array_1, needle);
+char* res21 = s21_strstr(array_1, needle);
+ck_assert_ptr_eq (res1, res21);
+#test strstr3
+char array_1[20] = "Solar\0Halo";
+char needle[20] = "Halo";
+char* res1 = strstr(array_1, needle);
+char* res21 = s21_strstr(array_1, needle);
+ck_assert_ptr_eq (res1, res21);
+#test strstr4
+char array_1[20] = "Solar Halo";
+char needle[20] = "r H";
+char* res1 = strstr(array_1, needle);
+char* res21 = s21_strstr(array_1, needle);
+ck_assert_str_eq (res1, res21);
+
+#tcase strtok
+
+#test strtok1
+char array_1[40] = "abcd efgh iklmn";
+char array_2[40] = "abcd efgh eklmn";
+char token[40] = " ";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_2, token);
+ck_assert_str_eq(res1, res21);
+
+#test strtok2
+char array_1[40] = "abcd efgh iklmn";
+char array_2[40] = "abcd efgh iklmn";
+char token[40] = "efgh";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_2, token);
+ck_assert_str_eq(res1, res21);
+
+#test strtok3
+char array_1[40] = "abcd efgh iklmn";
+char array_2[40] = "abcd efgh iklmn";
+char token[40] = "iklmn";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_2, token);
+ck_assert_str_eq(res1, res21);
+
+#test strtok4
+char array_1[40] = "abcd \0 efgh iklmn";
+char array_2[40] = "abcd \0 efgh iklmn";
+char token[40] = "efgh";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_2, token);
+ck_assert_str_eq(res1, res21);
+
+#test strtok5
+char array_1[40] = "";
+char token[40] = "efgh";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_1, token);
+ck_assert_ptr_eq(res1, res21);
+
+#test strtok6
+char array_1[40] = "\0";
+char token[40] = "efgh";
+char* res1 = strtok(array_1, token);
+char* res21 = s21_strtok(array_1, token);
+ck_assert_ptr_eq(res1, res21);
+
+#tcase Memchr
+
+#test memchr1
+//  Arrange
+char *str1 = "aboba";
+char c1 = 'a';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 5);
+p2 = memchr(str1, c1, 5);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#test memchr2
+//  Arrange
+char *str1 = "";
+char c1 = 'x';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 1);
+p2 = memchr(str1, c1, 1);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#test memchr3
+//  Arrange
+char *str1 = "abcdefgabcdefg";
+char c1 = 'y';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 5);
+p2 = memchr(str1, c1, 5);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#test memchr4
+//  Arrange
+char *str1 = "11111111111111";
+char c1 = 'a';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 5);
+p2 = memchr(str1, c1, 5);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#test memchr5
+//  Arrange
+char *str1 = "abcdefgabcdefg";
+char c1 = 'd';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 5);
+p2 = memchr(str1, c1, 5);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#test memchr6
+//  Arrange
+char *str1 = "";
+char c1 = '\0';
+void *p1;
+void *p2;
+//  Act
+p1 = s21_memchr(str1, c1, 5);
+p2 = memchr(str1, c1, 5);
+//  Assert
+ck_assert_int_eq(p1 - p2, 0);
+
+#tcase Memcpy
+
+#test memcpy1
+//  Arrange
+    char array_4[] = "abcd";
+    char array_5[] = "efgh";
+    char array_8[] = "abcd";
+    char array_9[] = "efgh";
+//  Act
+    s21_memcpy(array_4, array_5, 4);
+    memcpy(array_8, array_9, 4);
+//  Assert
+    ck_assert_str_eq(array_4, array_8);
+#test memcpy2
+//  Arrange
+    char array_4[] = "abcd";
+    char array_6[] = "efghi";
+    char array_8[] = "abcd";
+    char array_10[] = "efghi";
+//  Act
+    s21_memcpy(array_4, array_6, 4);
+    memcpy(array_8, array_10, 4);
+//  Assert
+    ck_assert_str_eq(array_4, array_8);
+
+#test memcpy3
+//  Arrange
+    char array_4[] = "abcd";
+    char array_6[] = "efghi";
+    char array_8[] = "abcd";
+    char array_10[] = "efghi";
+//  Act
+    s21_memcpy(array_6, array_4, 1);
+    memcpy(array_10, array_8, 1);
+//  Assert
+    ck_assert_str_eq(array_6, array_10);
+
+#test memcpy4
+//  Arrange
+    char array_1[256] = "qwertyuiop[]asdfghjkl;zxcvbnm<>?";
+    void* mem_1 = malloc(256);
+    void* mem_2 = malloc(256);
+//  Assert
+    ck_assert_str_eq(memcpy(mem_1, array_1, sizeof(array_1)), s21_memcpy(mem_1, array_1, sizeof(array_1)));
+    free(mem_1);
+    free(mem_2);
+
+#test memcpy5
+//  Arrange
+    char array_1[256] = "qwertyuiop[]asdfghjkl;zxcvbnm<>?";
+    void* mem_1 = malloc(256);
+    void* mem_2 = malloc(256);
+//  Assert
+    ck_assert_str_eq(memcpy(mem_1, array_1, sizeof(array_1)), s21_memcpy(mem_1, array_1, sizeof(array_1)));
+    free(mem_1);
+    free(mem_2);
+
+#test memcpy6
+//  Arrange
+    char array_2[256] = "?><mnbvcxz;lkjhgfdsa][poiuytrewq";
+    void* mem_1 = malloc(256);
+    void* mem_2 = malloc(256);
+//  Assert
+    ck_assert_str_eq(memcpy(mem_2, array_2, sizeof(array_2)), s21_memcpy(mem_2, array_2, sizeof(array_2)));
+    free(mem_1);
+    free(mem_2);
+
+#test memcpy7
+//  Arrange
+    char array_2[256] = "?><mnbvcxz;lkjhgfdsa][poiuytrewq";
+    void* mem_1 = malloc(256);
+    void* mem_2 = malloc(256);
+//  Assert
+    ck_assert_str_eq(memcpy(mem_2, array_2, sizeof(array_2)), s21_memcpy(mem_2, array_2, sizeof(array_2)));
+    free(mem_1);
+    free(mem_2);
+#test memcpy8
+//  Arrange
+    char array_3[256] = "";
+    void* mem_1 = malloc(256);
+    void* mem_2 = malloc(256);
+//  Assert
+    ck_assert_ptr_eq(memcpy(mem_1, array_3, sizeof(s21_NULL)), s21_memcpy(mem_1, array_3, sizeof(s21_NULL)));
+    free(mem_1);
+    free(mem_2);
+
+#tcase sprintf
+
+#test sprintf228
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%-10s", "HEllo");
+s21_sprintf(array_2, "%-10s", "HEllo");
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf1
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%d", 228);
+s21_sprintf(array_2, "%d", 228);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf2
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%4c", 'f');
+s21_sprintf(array_2, "%4c", 'f');
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf3
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%12.7s", "Summer");
+s21_sprintf(array_2, "%12.7s", "Summer");
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf4
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%8.2f", 125.865);
+s21_sprintf(array_2, "%8.2f", 125.865);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf5
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%-8.2f hello %c", 125.865, 'g');
+s21_sprintf(array_2, "%-8.2f hello %c", 125.865, 'g');
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf6
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%+5d %2c", 156, 'g');
+s21_sprintf(array_2, "%+5d %2c", 156, 'g');
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf7
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%4.10s %-3c", "Breaking my  back", 'g');
+s21_sprintf(array_2, "%4.10s %-3c", "Breaking my back", 'g');
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf8
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%2c %-3c", 'h', 'g');
+s21_sprintf(array_2, "%2c %-3c", 'h', 'g');
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf9
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "% 4d" , -13);
+s21_sprintf(array_2, "% 4d", -13);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf10
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%+8f" , 13.3);
+s21_sprintf(array_2, "%+8f", 13.3);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf11
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%hd" , 13784);
+s21_sprintf(array_2, "%hd", 13784);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf12
+char array_1[1024];
+char array_2[1024];
+long int i = 13784212;
+sprintf(array_1, "%ld" , i);
+s21_sprintf(array_2, "%ld", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf13
+char array_1[1024];
+char array_2[1024];
+wchar_t i = 'm';
+sprintf(array_1, "%lc", i);
+s21_sprintf(array_2, "%lc", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf14
+char array_1[1024];
+char array_2[1024];
+wchar_t i = 'm';
+sprintf(array_1, "%lc", i);
+s21_sprintf(array_2, "%lc", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf15
+char array_1[1024];
+char array_2[1024];
+double f = -167.807;
+sprintf(array_1, "% 10.2f", f);
+s21_sprintf(array_2, "% 10.2f", f);    
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf16
+char array_1[1024];
+char array_2[1024];
+double f = 167.807;
+sprintf(array_1, "% 10.2f", f);
+s21_sprintf(array_2, "% 10.2f", f); 
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf17
+char array_1[1024];
+char array_2[1024];
+double f = -167.807;
+sprintf(array_1, "%- 10.2f", f);
+s21_sprintf(array_2, "%- 10.2f", f);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf18
+char array_1[1024];
+char array_2[1024];
+double f = 167.801;
+sprintf(array_1, "%-+10.2f", f);
+s21_sprintf(array_2, "%-+10.2f", f);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf19
+char array_1[1024];
+char array_2[1024];
+double f = 167.808;
+double g = 785.9833;
+sprintf(array_1, " % 10.2f % -4.3f", f, g);
+s21_sprintf(array_2, " % 10.2f % -4.3f", f, g);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf20
+char array_1[1024];
+char array_2[1024];
+int i = INT_MAX;
+sprintf(array_1, "%-d", i);
+s21_sprintf(array_2, "%-d", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf21
+char array_1[1024];
+char array_2[1024];
+int i = 18945;
+sprintf(array_1, " %.6d", i);
+s21_sprintf(array_2, " %.6d", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf22
+char array_1[1024];
+char array_2[1024];
+int i = 18945;
+sprintf(array_1, "% 2.5d", i);
+s21_sprintf(array_2, "% 2.5d", i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf23
+char array_1[1024];
+char array_2[1024];
+wchar_t* array = L"Icarus dive";
+sprintf(array_1, "%-ls", array);
+s21_sprintf(array_2, "%-ls", array);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf24
+char array_1[1024];
+char array_2[1024];
+int i = 687;
+int h = -322;
+sprintf(array_1, "%-+.5d %-+20.15d", h, i);
+s21_sprintf(array_2, "%-+.5d %-+20.15d", h, i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf25
+char array_1[1024];
+char array_2[1024];
+int i = 687;
+int h = 322;
+sprintf(array_1, "%- .5d %-+20.15d", h, i);
+s21_sprintf(array_2, "%- .5d %-+20.15d", h, i);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf26
+char array_1[1024];
+char array_2[1024];
+wchar_t* array1 = L"Until the bitter end";
+wchar_t* array2 = L"It's over";
+sprintf(array_1, "%-.6ls %ls", array1, array2);
+s21_sprintf(array_2, "%-.6ls %ls", array1, array2);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf27
+char array_1[1024];
+char array_2[1024];
+wchar_t* array2 = L"bye";
+char* array1 = "low";
+sprintf(array_1, "%8ls %-s", array2, array1);
+s21_sprintf(array_2, "%8ls %-s", array2, array1);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf28
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%.8f", 1234.567);
+s21_sprintf(array_2, "%.8f", 1234.567);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf29
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%%");
+s21_sprintf(array_2, "%%");
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf30
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%8u", 1235);
+s21_sprintf(array_2, "%8u", 1235);
+ck_assert_str_eq(array_1, array_2);
+
+#test sprintf31
+char array_1[1024];
+char array_2[1024];
+sprintf(array_1, "%7.3u", 12);
+s21_sprintf(array_2, "%7.3u", 12);
+ck_assert_str_eq(array_1, array_2);
+
+
+#tcase trim
+#test trim1
+char* array1 = "123xyz456opk789";
+char* array2 = "123456789";
+char* res21 = (char*)s21_trim(array1, array2);
+ck_assert_str_eq(res21, "xyz456opk");
+
+#test trim2
+char* array1 = "111131131111";
+char* array2 = "12";
+char* res21 = (char*)s21_trim(array1, array2);
+ck_assert_str_eq(res21, "3113");
+
+#test trim3
+char* array1 = "";
+char* array2 = "12";
+char* res21 = (char*)s21_trim(array1, array2);
+ck_assert_str_eq(res21, "");
+
+#test trim4
+char* array1 = "qwerty";
+char* array2 = "";
+char* res21 = (char*)s21_trim(array1, array2);
+ck_assert_str_eq(res21, "qwerty");
+
+#test trim5
+char* array1 = "qwe1rty";
+char* array2 = "1123";
+char* res21 = (char*)s21_trim(array1, array2);
+ck_assert_str_eq(res21, "qwe1rty");
+
+#tcase to_upper
+
+#test to_upper1
+char* array_1 = "";
+char* array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "");
+
+#test to_upper2
+char* array_1 = "test";
+char* array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "TEST");
+
+#test to_upper3
+char *array_1 = "!@#!$^";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "!@#!$^");
+
+#test to_upper4
+char *array_1 = " t e s t";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, " T E S T");
+
+#test to_upper5
+char *array_1 = "test001";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "TEST001");
+
+#test to_upper6
+char *array_1 = "TEST\0001";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "TEST\0001");
+
+#test to_upper7
+char *array_1 = "\n\0\\n";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, "\n\0\\N");
+
+#test to_upper8
+char *array_1 = " ";
+char *array_10;
+array_10 = s21_to_upper(array_1);
+ck_assert_str_eq(array_10, " ");
+
+#tcase to_lower
+
+#test to_lower1
+char *array_1 = "";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "");
+
+#test to_lower2
+char *array_1 = "TEST";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "test");
+
+#test to_lower3
+char *array_1 = "!@#!$^";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "!@#!$^");
+
+#test to_lower4
+char *array_1 = " T E S T";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, " t e s t");
+
+#test to_lower5
+char *array_1 = "TEST001";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "test001");
+
+#test to_lower6
+char *array_1 = "test\0001";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "test\0001");
+
+#test to_lower7
+char *array_1 = "\n\0\\N";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, "\n\0\\n");
+
+#test to_lower8
+char *array_1 = " ";
+char *array_10;
+array_10 = s21_to_lower(array_1);
+ck_assert_str_eq(array_10, " ");
+
+#tcase insert
+
+#test insert1
+char str[1024] = "Breaking";
+char source[1024] = " my back";
+size_t index = 8;
+char* res21 = s21_insert(str, source, index);
+ck_assert_str_eq(res21, "Breaking my back");
+
+#test insert2
+char* str = "Alone dark";
+char* source = "in the ";
+size_t index = 6; 
+char* res21 = (char*)s21_insert(str, source, index);
+ck_assert_str_eq(res21, "Alone in the dark");
+
+#test insert3
+char str[1024] = "honored";
+char source[100] = "Dis";
+size_t index = 0; 
+char* res21 = s21_insert(str, source, index);
+ck_assert_str_eq(res21, "Dishonored");
+
+//obeme
+
+#test insert4
+char str[1024] = "";
+char source[100] = "Desperado";
+size_t index = 0; 
+char* res21 = s21_insert(str, source, index);
+ck_assert_str_eq(res21, "Desperado");
+
+#test insert5
+char str[1024] = "Im temptation";
+char source[100] = "mortal";
+size_t index = 2; 
+char* res21 = s21_insert(str, source, index);
+ck_assert_str_eq(res21, "Immortal temptation");
